@@ -5,8 +5,14 @@ var checkedBoxes = [false, false, false, false] //bool array for checkboxes
 const alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n",
                   "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
 
+const alphaUpper = alphabet.map((letter) => letter.toUpperCase())
+
+const nums = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+
 const specials = ["!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "{", "}", "-", "=",
                    "+", ",", ".", ";", "'", "/", "[", "]"];
+
+const allCharacters = [alphabet, alphaUpper, nums, specials]
 
 function resetForm() {
   document.getElementById("plength").style.backgroundColor = "white";
@@ -49,18 +55,54 @@ function checkCharacter() {
   }
 }
 
+function createCharString(ratio, arr) {
+  let charString = "";
+  
+  for (let i=0; i < ratio; i++) {
+    let ranIndex = Math.floor(Math.random() * arr.length);
+    charString = charString + arr[ranIndex];
+  }
+  return charString;
+}
+
+function scramble(pass) {
+  let scrambledPass = "";
+
+  for (let i=0; i < pass.length; i++) {
+    let ranPassIndex = Math.floor(Math.random() * pass.length);
+    scrambledPass = scrambledPass + pass[ranPassIndex]
+  }
+  return scrambledPass;
+}
+
 function generatePassword() {
-  resetForm() //resets form style
+  let passGenerated = "";
+  resetForm(); //resets form style
   let passwordValidation = checkPassword()[0]; //check for valid password
   let checkBoxes = checkCharacter()[0];
   let passLength = checkPassword()[1];
   let checkAmount = checkCharacter()[1];
 
   if (passwordValidation && checkBoxes) {
-    console.log(checkAmount)
-    let weight = 100/checkAmount*.01
-    let ratio = passLength*weight
-    console.log(ratio)
+    let weight = 100/checkAmount * .01
+    let ratio = Math.floor(passLength * weight)
+
+    for (i in checkedBoxes) {
+      if (checkedBoxes[i]) {
+        passGenerated = passGenerated + createCharString(ratio, allCharacters[i])
+      }
+    }
+    
+    while (passGenerated.length < passLength) {
+      let ranCheckIndex = Math.floor(Math.random() * checkAmount)
+      if (checkedBoxes[ranCheckIndex]) {
+        let ranCharArray = allCharacters[ranCheckIndex]
+        console.log(ranCharArray)
+        let ranCharIndex = Math.floor(Math.random() * ranCharArray.length)
+        passGenerated = passGenerated + ranCharArray[ranCharIndex]
+      }   
+    }
+  return scramble(passGenerated)
   } else {
     console.log(checkBoxes)
   }
