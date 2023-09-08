@@ -2,6 +2,12 @@
 var generateBtn = document.querySelector("#generate");
 var checkedBoxes = [false, false, false, false] //bool array for checkboxes
 
+const alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n",
+                  "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+
+const specials = ["!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "{", "}", "-", "=",
+                   "+", ",", ".", ";", "'", "/", "[", "]"];
+
 function resetForm() {
   document.getElementById("plength").style.backgroundColor = "white";
 }
@@ -12,18 +18,22 @@ function checkPassword() {
 
   //checks length of password 
   if (passLength < 8 || passLength > 128) {
-    return false;
+    return [false, passLength];
   } else {
-    return true;     
+    return [true, passLength];     
   }
 }
 
 function checkCharacter() {
   let chars = document.getElementsByClassName("chars"); //checkbox elements
+  let amount = 0;
 
   //updates checkedBoxes with checked value
   for (let i=0; i < 4; i++) {
-    checkedBoxes[i] = chars[i].checked 
+    checkedBoxes[i] = chars[i].checked
+    if (chars[i].checked) {
+      amount++
+    } 
   }
 
   //checks if value is false in checkedBoxes
@@ -33,21 +43,26 @@ function checkCharacter() {
   
   //checks if no boxes are checked and returns bool
   if (checkedBoxes.every(allFalse)) {
-    return false;
+    return [false, amount];
   } else {
-    return true;
+    return [true, amount];
   }
 }
 
 function generatePassword() {
   resetForm() //resets form style
-  let passwordValidation = checkPassword() //check for valid password
-  let checkBoxes = checkCharacter()
+  let passwordValidation = checkPassword()[0]; //check for valid password
+  let checkBoxes = checkCharacter()[0];
+  let passLength = checkPassword()[1];
+  let checkAmount = checkCharacter()[1];
 
   if (passwordValidation && checkBoxes) {
-    console.log(checkedBoxes, true)
+    console.log(checkAmount)
+    let weight = 100/checkAmount*.01
+    let ratio = passLength*weight
+    console.log(ratio)
   } else {
-    console.log(false, checkedBoxes)
+    console.log(checkBoxes)
   }
 }
 
