@@ -136,6 +136,23 @@ button[disabled] {
   flex: 1;
 }
 
+#prompts {
+  background-color: hsl(0, 0%, 100%);
+  border-radius: 5px;
+  border-width: 1px;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px 0px;
+  color: hsl(206, 17%, 28%);
+  font-size: 18px;
+  margin: 0 auto;
+  margin-top: 2%;
+  max-width: 800px;
+  padding: 30px 40px;
+}
+
+#prompts h3 {
+  border-bottom: 1px solid black;
+}
+
 @media (max-width: 690px) {
   .btn {
     font-size: 1rem;
