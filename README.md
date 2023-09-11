@@ -6,4 +6,4 @@ This is a passwrord generator made with pure Javascript.
 
 ## Screenshot
 
-[](assets/03-javascript-homework-demo.png)
+[]("Assets/03-javascript-homework-demo.png")
