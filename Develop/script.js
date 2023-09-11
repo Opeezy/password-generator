@@ -103,8 +103,10 @@ function generatePassword() {
       }   
     }
   return scramble(passGenerated)
-  } else {
-    console.log(checkBoxes)
+  } else if (!passwordValidation) {
+    alert("Choose a password length between 8 and 128")
+  } else if (!checkBoxes) {
+    alert("Choose atleast one type of character")
   }
 }
 
